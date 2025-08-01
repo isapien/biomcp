@@ -29,8 +29,11 @@ RUN git clone https://github.com/google-deepmind/alphagenome.git /tmp/alphagenom
 # Expose port for remote MCP connections
 EXPOSE 8000
 
-# Set default mode to worker, but allow it to be overridden
-ENV MCP_MODE=stdio
+# Set default mode to HTTP with accessible host
+ENV MCP_MODE=http
+ENV MCP_HOST=0.0.0.0
+ENV MCP_PORT=8000
+ENV MCP_PATH=/mcp
 
 # Run the MCP server with configurable mode
-CMD ["sh", "-c", "biomcp run --mode ${MCP_MODE}"]
+CMD ["sh", "-c", "biomcp run --mode ${MCP_MODE} --host ${MCP_HOST} --port ${MCP_PORT} --path ${MCP_PATH}"]
